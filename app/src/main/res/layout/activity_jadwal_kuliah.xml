@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".presentation.home.jadwal.JadwalKuliahActivity">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@color/primary"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/tvJadwalKuliah"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_semi_bold"
+            android:text="Jadwal Kuliah"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/imageButtonBack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:src="@drawable/arrow_back"
+            android:background="@android:color/transparent"
+            app:tint="@color/white"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <HorizontalScrollView
+        android:id="@+id/horizontalScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginHorizontal="24dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayout">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnSenin"
+                android:layout_width="80dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="12dp"
+                android:background="@drawable/btnlogin"
+                android:backgroundTint="@color/oren"
+                android:fontFamily="@font/poppins_semi_bold"
+                android:text="Senin"
+                android:textColor="@color/white"
+                android:textSize="15sp" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnSelasa"
+                android:layout_width="80dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/btnlogin"
+                android:backgroundTint="#EBEBEB"
+                android:fontFamily="@font/poppins_semi_bold"
+                android:text="Selasa"
+                android:textColor="@color/black"
+                android:textSize="15sp" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnRabu"
+                android:layout_width="80dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/btnlogin"
+                android:backgroundTint="#EBEBEB"
+                android:fontFamily="@font/poppins_semi_bold"
+                android:text="Rabu"
+                android:textColor="@color/black"
+                android:textSize="15sp" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnKamis"
+                android:layout_width="80dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/btnlogin"
+                android:backgroundTint="#EBEBEB"
+                android:fontFamily="@font/poppins_semi_bold"
+                android:text="Kamis"
+                android:textColor="@color/black"
+                android:textSize="15sp" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnJumat"
+                android:layout_width="80dp"
+                android:layout_height="40dp"
+                android:layout_marginEnd="48dp"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/btnlogin"
+                android:backgroundTint="#EBEBEB"
+                android:fontFamily="@font/poppins_semi_bold"
+                android:text="Jumat"
+                android:textColor="@color/black"
+                android:textSize="15sp" />
+        </LinearLayout>
+    </HorizontalScrollView>
+
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/FragmentContainerViewJadwal"
+        android:layout_width="match_parent"
+        android:layout_height="605dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/horizontalScrollView" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

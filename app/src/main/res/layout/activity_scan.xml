@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".presentation.scan.ScanActivity">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/ImageButtonBack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="12dp"
+            android:background="@android:color/transparent"
+            android:contentDescription="this is null"
+            android:src="@drawable/arrow_back"
+            app:layout_constraintStart_toStartOf="@id/constraintLayout"
+            app:layout_constraintTop_toTopOf="@id/constraintLayout"
+            app:tint="@color/primary" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_bold"
+            android:text="Scan QR Code"
+            android:textColor="@color/primary"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="@id/constraintLayout"
+            app:layout_constraintEnd_toEndOf="@id/constraintLayout"
+            app:layout_constraintStart_toStartOf="@id/constraintLayout"
+            app:layout_constraintTop_toBottomOf="@+id/ImageButtonBack" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <com.budiyev.android.codescanner.CodeScannerView
+        android:id="@+id/scanner_view"
+        android:layout_width="360dp"
+        android:layout_height="424dp"
+        app:autoFocusButtonVisible="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.494"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
+
+    <TextView
+        android:id="@+id/tv_output"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:fontFamily="@font/poppins_regular"
+        android:textSize="24sp"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/scanner_view"
+        tools:text="output scan" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
