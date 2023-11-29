@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import com.example.press.Retrofit.RetrofitClient
 import com.example.press.databinding.ActivityLoginBinding
 import com.example.press.model.DataStoreManager
@@ -16,14 +17,31 @@ import com.example.press.mvvm.ViewModelFactory
 class LoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
     private lateinit var viewModel: LoginViewModel
+    private lateinit var dataStoreManager: DataStoreManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        viewModel = ViewModelProvider(this, ViewModelFactory(Repository(RetrofitClient.apiService, DataStoreManager(this))))
-            .get(LoginViewModel::class.java)
+        dataStoreManager = DataStoreManager(this)
+
+        // Check if a token exists in the DataStore
+        lifecycleScope.launchWhenStarted {
+            dataStoreManager.authToken.collect { authToken ->
+                if (authToken != null) {
+                    // Jika token sudah ada, langsung pindah ke MainActivity
+                    val intent = Intent(this@LoginActivity, MainActivity::class.java)
+                    startActivity(intent)
+                    finish()
+                }
+            }
+        }
+
+        viewModel = ViewModelProvider(
+            this,
+            ViewModelFactory(Repository(RetrofitClient.apiService, dataStoreManager))
+        ).get(LoginViewModel::class.java)
 
         binding.btnLogin.setOnClickListener {
             val username = binding.etUsername.text.toString()
@@ -32,7 +50,7 @@ class LoginActivity : AppCompatActivity() {
             if (username.isNotEmpty() && password.isNotEmpty()) {
                 viewModel.login(username, password)
             } else {
-                // Salah satu atau kedua field kosong, tampilkan pesan kesalahan
+                // Tampilkan pesan kesalahan untuk field kosong
                 if (username.isEmpty()) {
                     Toast.makeText(this, "NPM harus diisi", Toast.LENGTH_SHORT).show()
                 }
@@ -44,10 +62,13 @@ class LoginActivity : AppCompatActivity() {
 
         viewModel.loginResult.observe(this, Observer { success ->
             if (success) {
+                // DataStore akan di-update melalui saveAuthToken di Repository
+                // Tidak perlu lagi menyimpan token di sini
                 val intent = Intent(this@LoginActivity, MainActivity::class.java)
                 startActivity(intent)
                 finish()
             } else {
+                // Tampilkan pesan kegagalan login
                 Toast.makeText(this, "NPM dan Password Salah", Toast.LENGTH_SHORT).show()
             }
         })
