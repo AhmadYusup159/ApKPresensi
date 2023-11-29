@@ -3,6 +3,7 @@ package com.example.press
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.press.Retrofit.RetrofitClient
@@ -28,7 +29,17 @@ class LoginActivity : AppCompatActivity() {
             val username = binding.etUsername.text.toString()
             val password = binding.etPassword.text.toString()
 
-            viewModel.login(username, password)
+            if (username.isNotEmpty() && password.isNotEmpty()) {
+                viewModel.login(username, password)
+            } else {
+                // Salah satu atau kedua field kosong, tampilkan pesan kesalahan
+                if (username.isEmpty()) {
+                    Toast.makeText(this, "NPM harus diisi", Toast.LENGTH_SHORT).show()
+                }
+                if (password.isEmpty()) {
+                    Toast.makeText(this, "Password harus diisi", Toast.LENGTH_SHORT).show()
+                }
+            }
         }
 
         viewModel.loginResult.observe(this, Observer { success ->
@@ -37,7 +48,7 @@ class LoginActivity : AppCompatActivity() {
                 startActivity(intent)
                 finish()
             } else {
-                // Handle login failure
+                Toast.makeText(this, "NPM dan Password Salah", Toast.LENGTH_SHORT).show()
             }
         })
     }
