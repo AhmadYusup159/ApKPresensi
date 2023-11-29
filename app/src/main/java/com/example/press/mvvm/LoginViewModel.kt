@@ -20,7 +20,7 @@ class LoginViewModel(private val repository: Repository) : ViewModel() {
             try {
                 val response: Response<LoginResponse> = repository.login(LoginRequest(username, password))
 
-                if (response.code() in 200..299) {
+                if (response.isSuccessful && response.body()?.success == true) {
                     response.body()?.token?.let { repository.saveAuthToken(it) }
                     _loginResult.value = true
                 } else {
