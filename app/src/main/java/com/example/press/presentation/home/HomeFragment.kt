@@ -32,6 +32,7 @@ class HomeFragment : Fragment() {
         binding?.CardViewJadwal?.setOnClickListener {
             val intent = Intent(context, JadwalKuliahActivity::class.java)
             startActivity(intent)
+            activity?.finish()
         }
 
         binding?.CardViewDenah?.setOnClickListener{
