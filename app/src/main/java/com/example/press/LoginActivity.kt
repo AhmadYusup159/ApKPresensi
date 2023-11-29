@@ -26,18 +26,6 @@ class LoginActivity : AppCompatActivity() {
 
         dataStoreManager = DataStoreManager(this)
 
-        // Check if a token exists in the DataStore
-        lifecycleScope.launchWhenStarted {
-            dataStoreManager.authToken.collect { authToken ->
-                if (authToken != null) {
-                    // Jika token sudah ada, langsung pindah ke MainActivity
-                    val intent = Intent(this@LoginActivity, MainActivity::class.java)
-                    startActivity(intent)
-                    finish()
-                }
-            }
-        }
-
         viewModel = ViewModelProvider(
             this,
             ViewModelFactory(Repository(RetrofitClient.apiService, dataStoreManager))
