@@ -6,10 +6,9 @@ import android.os.Bundle
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.lifecycleScope
 import com.example.press.model.DataStoreManager
-import com.example.press.mvvm.LoginViewModel
+import kotlinx.coroutines.launch
 
 class Splash : AppCompatActivity() {
-    private lateinit var viewModel: LoginViewModel
     private lateinit var dataStoreManager: DataStoreManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -19,7 +18,7 @@ class Splash : AppCompatActivity() {
 
         dataStoreManager = DataStoreManager(this)
 
-        lifecycleScope.launchWhenStarted {
+        lifecycleScope.launch{
             dataStoreManager.authToken.collect { authToken ->
                 if (authToken != null) {
                     // Jika token sudah ada, langsung pindah ke MainActivity

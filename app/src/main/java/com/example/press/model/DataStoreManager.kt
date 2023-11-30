@@ -7,6 +7,7 @@ import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 
 val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "user_preferences")
@@ -30,23 +31,13 @@ class DataStoreManager(context: Context) {
         }
     }
 
-    suspend fun saveLoginResponse(loginResponse: LoginResponse) {
+    suspend fun isAuthTokenAvailable(): Boolean {
+        val preferences = dataStore.data.first()
+        return preferences[TOKEN_KEY] != null
+    }
+    suspend fun logout() {
         dataStore.edit { preferences ->
-            preferences[LOGIN_RESPONSE_KEY] = loginResponse.toString()
+            preferences.remove(TOKEN_KEY)
         }
     }
-
-    fun getLoginResponse(): Flow<Unit?> {
-        return dataStore.data.map { preferences ->
-            val loginResponseString = preferences[LOGIN_RESPONSE_KEY]
-            if (loginResponseString != null) {
-                // Implementasikan konversi dari string ke LoginResponse
-                // Contoh:
-                // return LoginResponse.fromString(loginResponseString)
-            } else {
-                null
-            }
-        }
-    }
-
 }

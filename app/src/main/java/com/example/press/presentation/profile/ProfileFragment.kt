@@ -7,10 +7,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
+import androidx.lifecycle.lifecycleScope
 import com.example.press.LoginActivity
-import com.example.press.R
 import com.example.press.databinding.FragmentProfileBinding
-import com.example.press.presentation.home.jadwal.JadwalKuliahActivity
+import com.example.press.model.DataStoreManager
+import kotlinx.coroutines.launch
 
 
 class ProfileFragment : Fragment() {
@@ -18,11 +19,14 @@ class ProfileFragment : Fragment() {
     private var _binding : FragmentProfileBinding?= null
     private val binding get() = _binding
 
+    private lateinit var dataStoreManager: DataStoreManager
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentProfileBinding.inflate(layoutInflater, container, false)
+        dataStoreManager = DataStoreManager(requireContext())
         return binding?.root
     }
 
@@ -52,9 +56,14 @@ class ProfileFragment : Fragment() {
     }
 
     private fun performLogout() {
-        val intent = Intent(context, LoginActivity::class.java)
-        startActivity(intent)
-        activity?.finish()
+        lifecycleScope.launch {
+            if (dataStoreManager.isAuthTokenAvailable()) {
+                dataStoreManager.logout()
+            }
+            val intent = Intent(context, LoginActivity::class.java)
+            startActivity(intent)
+            activity?.finish()
+        }
     }
 
     override fun onDestroyView() {
