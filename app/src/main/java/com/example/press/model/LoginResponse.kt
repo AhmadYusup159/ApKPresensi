@@ -6,5 +6,6 @@ data class LoginResponse(
     val token: String,
     val expires: Long,
     val currUser: Int,
+    val userId : Int,
     val user: String,
     val role: Int)
