@@ -16,6 +16,7 @@ class DataStoreManager(context: Context) {
 
     companion object {
         val TOKEN_KEY = stringPreferencesKey("token")
+        val LOGIN_RESPONSE_KEY = stringPreferencesKey("login_response")
     }
 
     val authToken: Flow<String?>
@@ -28,4 +29,24 @@ class DataStoreManager(context: Context) {
             preferences[TOKEN_KEY] = token
         }
     }
+
+    suspend fun saveLoginResponse(loginResponse: LoginResponse) {
+        dataStore.edit { preferences ->
+            preferences[LOGIN_RESPONSE_KEY] = loginResponse.toString()
+        }
+    }
+
+    fun getLoginResponse(): Flow<Unit?> {
+        return dataStore.data.map { preferences ->
+            val loginResponseString = preferences[LOGIN_RESPONSE_KEY]
+            if (loginResponseString != null) {
+                // Implementasikan konversi dari string ke LoginResponse
+                // Contoh:
+                // return LoginResponse.fromString(loginResponseString)
+            } else {
+                null
+            }
+        }
+    }
+
 }

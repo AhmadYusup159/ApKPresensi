@@ -11,6 +11,7 @@ import com.example.press.presentation.home.denah.DenahRuanganActivity
 import com.example.press.presentation.home.jadwal.JadwalKuliahActivity
 import com.example.press.presentation.home.riwayat.RiwayatPresensiActivity
 import com.example.press.databinding.FragmentHomeBinding
+import retrofit2.Response
 
 class HomeFragment : Fragment() {
 
@@ -52,7 +53,9 @@ class HomeFragment : Fragment() {
             startActivity(intent)
             activity?.finish()
         }
+
     }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
