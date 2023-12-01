@@ -1,7 +1,5 @@
 package com.example.press.mvvm
 
-
-
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -13,7 +11,9 @@ import kotlinx.coroutines.launch
 
 class LoginViewModel(private val repository: Repository) : ViewModel() {
     private val _loginResult = MutableLiveData<Boolean>()
+    private val _userId = MutableLiveData<Int?>()
     val loginResult: LiveData<Boolean> get() = _loginResult
+    val userId: LiveData<Int?> get() = _userId
 
     fun login(username: String, password: String) {
         viewModelScope.launch {
@@ -22,6 +22,7 @@ class LoginViewModel(private val repository: Repository) : ViewModel() {
 
                 if (response.isSuccessful && response.body()?.success == true) {
                     response.body()?.token?.let { repository.saveAuthToken(it) }
+                    repository.getUserId()
                     _loginResult.value = true
                 } else {
                     _loginResult.value = false
@@ -30,5 +31,15 @@ class LoginViewModel(private val repository: Repository) : ViewModel() {
                 _loginResult.value = false
             }
         }
+    }
+
+    fun getUserId() {
+        viewModelScope.launch {
+            _userId.value = repository.getUserId()
+        }
+    }
+
+    suspend fun saveUserId(id: Int) {
+        repository.saveUserId(id)
     }
 }

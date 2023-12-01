@@ -28,6 +28,8 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 
+
+
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/circleImageView"
         android:layout_width="125dp"
@@ -38,6 +40,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/appCompatImageButtonLogout" />
+
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/appCompatImageViewNama"
@@ -75,10 +78,11 @@
         app:layout_constraintTop_toTopOf="@+id/appCompatImageViewNama" />
 
     <TextView
+        android:id="@+id/nama"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/poppins_extra_bold"
-        android:text="Dimas Anggoro Harahap"
+        android:text=""
         android:textColor="#4B4E56"
         android:textSize="12sp"
         app:layout_constraintStart_toStartOf="@+id/textView3"
@@ -120,10 +124,11 @@
         app:layout_constraintTop_toTopOf="@+id/appCompatImageViewNPM" />
 
     <TextView
+        android:id="@+id/npm"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/poppins_extra_bold"
-        android:text="207006068"
+        android:text=""
         android:textColor="#4B4E56"
         android:textSize="12sp"
         app:layout_constraintStart_toStartOf="@+id/textView4"
@@ -165,10 +170,11 @@
         app:layout_constraintTop_toTopOf="@+id/appCompatImageViewEmail" />
 
     <TextView
+        android:id="@+id/email"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/poppins_extra_bold"
-        android:text="dimasHrp02@student.unsil.ac.id"
+        android:text=""
         android:textColor="#4B4E56"
         android:textSize="12sp"
         app:layout_constraintStart_toStartOf="@+id/textView5"
@@ -211,10 +217,11 @@
         app:layout_constraintTop_toTopOf="@+id/appCompatImageViewHandphone" />
 
     <TextView
+        android:id="@+id/telp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/poppins_extra_bold"
-        android:text="081234567987"
+        android:text=""
         android:textColor="#4B4E56"
         android:textSize="12sp"
         app:layout_constraintStart_toStartOf="@+id/textView6"
@@ -255,10 +262,11 @@
         app:layout_constraintTop_toTopOf="@+id/appCompatImageViewTTL" />
 
     <TextView
+        android:id="@+id/alamat"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/poppins_extra_bold"
-        android:text="Jakarta, 17 Juli 1996"
+        android:text=""
         android:textColor="#4B4E56"
         android:textSize="12sp"
         app:layout_constraintStart_toStartOf="@+id/textView7"
