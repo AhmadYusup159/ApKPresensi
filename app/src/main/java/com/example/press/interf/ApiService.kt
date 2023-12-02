@@ -21,7 +21,7 @@ interface ApiService {
 
     @GET("/api/v1/mahasiswabyid/{id_user}")
     suspend fun getMyMahasiswa(
-        @Path("id_user") userid: Int,
+        @Path("id_user") userId: Int,
         @Header("Authorization") token: String
     ): Response<MahasiswaResponse>
 
