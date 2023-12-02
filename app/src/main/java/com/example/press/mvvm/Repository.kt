@@ -32,5 +32,8 @@ class Repository(private val apiService: ApiService, private val dataStoreManage
     suspend fun getUserId(): Int {
         return dataStoreManager.getUserId()?.toInt() ?: 0
     }
+    suspend fun getMahasiswaById(userId: Int, token: String): Response<MahasiswaResponse> {
+        return apiService.getMyMahasiswa(userId, token)
+    }
 
 }

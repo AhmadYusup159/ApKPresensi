@@ -30,6 +30,16 @@
 
 
 
+<!--    <de.hdodenhof.circleimageview.CircleImageView-->
+<!--        android:id="@+id/circleImageView"-->
+<!--        android:layout_width="125dp"-->
+<!--        android:layout_height="125dp"-->
+<!--        android:layout_marginTop="35dp"-->
+<!--        android:background="@drawable/bg_lingkaran"-->
+<!--        android:src="@drawable/foto_profil"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/appCompatImageButtonLogout" />-->
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/circleImageView"
         android:layout_width="125dp"
@@ -40,6 +50,9 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/appCompatImageButtonLogout" />
+
+
+
 
 
     <androidx.appcompat.widget.AppCompatImageView
@@ -255,7 +268,7 @@
         android:layout_marginStart="12dp"
         android:layout_marginTop="8dp"
         android:fontFamily="@font/poppins_semi_bold"
-        android:text="Tempat, tanggal dan lahir"
+        android:text="Alamat"
         android:textColor="#4B4E56"
         android:textSize="12sp"
         app:layout_constraintStart_toEndOf="@+id/appCompatImageViewTown"
