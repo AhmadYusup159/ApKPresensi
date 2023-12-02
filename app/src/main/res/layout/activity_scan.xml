@@ -62,7 +62,7 @@
         app:layout_constraintTop_toBottomOf="@+id/scanner_view"
         tools:text="output scan" />
 
-    <TextView
+   <!-- <TextView
         android:id="@+id/textView20"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -105,6 +105,6 @@
         android:layout_marginTop="8dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView21"
-        tools:text="akurasi" />
+        tools:text="akurasi" />-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>

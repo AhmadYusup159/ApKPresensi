@@ -143,9 +143,9 @@ class ScanActivity : AppCompatActivity() {
                     val targetLocation = LatLng(-1.629685, 103.593973)
 
                     if(calculateDistance(userLocation, targetLocation) <=1000){
-                        binding.tvLatitude.text = location.latitude.toString()
-                        binding.tvLongitude.text = location.longitude.toString()
-                        binding.akurasi.text = "${location.accuracy}%"
+//                        binding.tvLatitude.text = location.latitude.toString()
+//                        binding.tvLongitude.text = location.longitude.toString()
+//                        binding.akurasi.text = "${location.accuracy}%"
                         codeScanner.startPreview()
                     } else {
                         Toast.makeText(
