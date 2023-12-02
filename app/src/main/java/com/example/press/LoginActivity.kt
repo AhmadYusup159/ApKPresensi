@@ -16,19 +16,16 @@ import com.example.press.mvvm.ViewModelFactory
 class LoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
     private lateinit var viewModel: LoginViewModel
-    private lateinit var dataStoreManager: DataStoreManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        dataStoreManager = DataStoreManager(this)
+        val dataStoreManager = DataStoreManager(this)
+        val repository = Repository(RetrofitClient.apiService, dataStoreManager)
 
-        viewModel = ViewModelProvider(
-            this,
-            ViewModelFactory(Repository(RetrofitClient.apiService, dataStoreManager))
-        ).get(LoginViewModel::class.java)
+        viewModel = ViewModelProvider(this, ViewModelFactory(repository)).get(LoginViewModel::class.java)
 
         binding.btnLogin.setOnClickListener {
             val username = binding.etUsername.text.toString()
@@ -48,8 +45,6 @@ class LoginActivity : AppCompatActivity() {
 
         viewModel.loginResult.observe(this, Observer { success ->
             if (success) {
-                viewModel.getUserId()
-
                 val intent = Intent(this@LoginActivity, MainActivity::class.java)
                 startActivity(intent)
                 finish()
@@ -59,3 +54,4 @@ class LoginActivity : AppCompatActivity() {
         })
     }
 }
+

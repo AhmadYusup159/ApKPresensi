@@ -55,6 +55,7 @@ class DataStoreManager(context: Context) {
     suspend fun logout() {
         dataStore.edit { preferences ->
             preferences.remove(TOKEN_KEY)
+            preferences.remove(ID_USER_KEY)
         }
     }
 }

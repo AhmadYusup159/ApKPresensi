@@ -26,7 +26,7 @@ interface ApiService {
     companion object {
         fun create(): ApiService {
             val retrofit = Retrofit.Builder()
-                .baseUrl("http://195.35.14.176:3000/") // Ganti dengan URL base API sesuai kebutuhan
+                .baseUrl("http://195.35.14.176:3000/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
 

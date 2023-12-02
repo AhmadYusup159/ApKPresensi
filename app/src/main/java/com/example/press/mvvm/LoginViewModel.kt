@@ -39,7 +39,5 @@ class LoginViewModel(private val repository: Repository) : ViewModel() {
         }
     }
 
-    suspend fun saveUserId(id: Int) {
-        repository.saveUserId(id)
-    }
+
 }
