@@ -3,6 +3,7 @@ package com.example.press.presentation.profile
 import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -12,9 +13,12 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
 import com.example.press.LoginActivity
+import com.example.press.Retrofit.RetrofitClient
 import com.example.press.databinding.FragmentProfileBinding
 import com.example.press.model.DataStoreManager
 import com.example.press.mvvm.ProfileViewModel
+import com.example.press.mvvm.Repository
+import com.example.press.mvvm.ViewModelFactory
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
@@ -46,38 +50,43 @@ class ProfileFragment : Fragment() {
     }
 
     private fun setupViewModel() {
-        profileViewModel = ViewModelProvider(this).get(ProfileViewModel::class.java)
+        val repository = Repository(RetrofitClient.apiService, dataStoreManager)
+        profileViewModel = ViewModelProvider(this,  ViewModelFactory(repository))[ProfileViewModel::class.java]
     }
 
     private fun observeMahasiswaData() {
         profileViewModel.mahasiswa.observe(viewLifecycleOwner, Observer { mahasiswa ->
-            // Update UI dengan data mahasiswa
-            binding?.nama?.text = mahasiswa.nama_mahasiswa
-            binding?.npm?.text = mahasiswa.npm
-            binding?.email?.text = mahasiswa.email
-            binding?.telp?.text = mahasiswa.notlp
-            binding?.alamat?.text = mahasiswa.alamat
+            mahasiswa.values?.forEach {
+                // Update UI dengan data mahasiswa
+                binding?.nama?.text = it?.namaMahasiswa
+                binding?.npm?.text = it?.npm
+                binding?.email?.text = it?.email
+                binding?.telp?.text = it?.notlp
+                binding?.alamat?.text = it?.alamat
 
-            // Handle gambar profil
-            Glide.with(requireContext())
-                .load(mahasiswa.foto)
-                .into(binding?.circleImageView)
-
-
+                // Handle gambar profil
+                binding?.circleImageView?.let {circleImage ->
+                    Glide.with(requireContext())
+                        .load("http://195.35.14.176:3000/uploadfotomahasiswa/${it?.foto}")
+                        .into(circleImage)
+                }
+                Log.d("foto", "observeMahasiswaData: ${it?.foto} ")
+            }
+            Log.d("mahasiswa", "fetchDataAndPopulateUI: $mahasiswa")
         })
     }
 
     private fun fetchDataAndPopulateUI() {
         lifecycleScope.launch {
-            val userId = withContext(Dispatchers.IO) {
-                dataStoreManager.getUserId() ?: 0
-            }
-
             val token = withContext(Dispatchers.IO) {
                 dataStoreManager.authToken.firstOrNull() ?: ""
             }
-
-            profileViewModel.fetchMahasiswa(userId, token)
+            val bearerToken = "Bearer $token"
+            val userId = withContext(Dispatchers.IO) {
+                dataStoreManager.getUserId() ?: 0
+            }
+            profileViewModel.fetchMahasiswa(userId, bearerToken)
+            Log.d("token", "fetchDataAndPopulateUI: $bearerToken")
         }
     }
 

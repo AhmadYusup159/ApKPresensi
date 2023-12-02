@@ -2,10 +2,8 @@ package com.example.press.interf
 
 import com.example.press.model.LoginRequest
 import com.example.press.model.LoginResponse
-import com.example.press.model.MahasiswaResponse
+import com.example.press.model.UserResponse
 import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.Header
@@ -23,6 +21,6 @@ interface ApiService {
     suspend fun getMyMahasiswa(
         @Path("id_user") userId: Int,
         @Header("Authorization") token: String
-    ): Response<MahasiswaResponse>
+    ): Response<UserResponse>
 
 }

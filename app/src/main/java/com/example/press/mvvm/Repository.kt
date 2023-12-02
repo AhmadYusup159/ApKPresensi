@@ -4,11 +4,7 @@ import com.example.press.interf.ApiService
 import com.example.press.model.DataStoreManager
 import com.example.press.model.LoginRequest
 import com.example.press.model.LoginResponse
-import com.example.press.model.MahasiswaResponse
-import kotlinx.coroutines.flow.first
-import okhttp3.MediaType
-import okhttp3.MediaType.Companion.toMediaType
-import okhttp3.ResponseBody
+import com.example.press.model.UserResponse
 
 import retrofit2.Response
 
@@ -32,7 +28,7 @@ class Repository(private val apiService: ApiService, private val dataStoreManage
     suspend fun getUserId(): Int {
         return dataStoreManager.getUserId()?.toInt() ?: 0
     }
-    suspend fun getMahasiswaById(userId: Int, token: String): Response<MahasiswaResponse> {
+    suspend fun getMahasiswaById(userId: Int, token: String): Response<UserResponse> {
         return apiService.getMyMahasiswa(userId, token)
     }
 

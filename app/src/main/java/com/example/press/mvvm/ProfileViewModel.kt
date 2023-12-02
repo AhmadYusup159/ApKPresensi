@@ -4,13 +4,13 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.press.model.MahasiswaResponse
+import com.example.press.model.UserResponse
 import kotlinx.coroutines.launch
 
 class ProfileViewModel(private val repository: Repository) : ViewModel() {
 
-    private val _mahasiswa = MutableLiveData<MahasiswaResponse>()
-    val mahasiswa: LiveData<MahasiswaResponse> get() = _mahasiswa
+    private val _mahasiswa = MutableLiveData<UserResponse>()
+    val mahasiswa: LiveData<UserResponse> get() = _mahasiswa
 
     fun fetchMahasiswa(userId: Int, token: String) {
         viewModelScope.launch {
