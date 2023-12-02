@@ -33,22 +33,4 @@ class Repository(private val apiService: ApiService, private val dataStoreManage
         return dataStoreManager.getUserId()?.toInt() ?: 0
     }
 
-
-    suspend fun saveUserId(id: Int) {
-        dataStoreManager.saveUserId(id.toString())
-    }
-
-    suspend fun getMyMahasiswa(): Response<MahasiswaResponse> {
-        val token = dataStoreManager.authToken.first() ?: ""
-        val userid = dataStoreManager.getUserId()?.toInt() ?: 0
-
-        return if (userid != 0) {
-            apiService.getMyMahasiswa(userid, "Bearer $token")
-        } else {
-            // Handle the case when userId is not available
-            // For example, return an error response or handle it as needed
-            // This depends on your specific requirements
-            Response.error(400, ResponseBody.create("application/json".toMediaType(), ""))
-        }
-    }
 }

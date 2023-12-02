@@ -31,7 +31,7 @@ class ProfileFragment : Fragment() {
     ): View? {
         _binding = FragmentProfileBinding.inflate(layoutInflater, container, false)
         dataStoreManager = DataStoreManager(requireContext())
-        repository = Repository(ApiService.create(), dataStoreManager)
+
 
         return binding?.root
     }

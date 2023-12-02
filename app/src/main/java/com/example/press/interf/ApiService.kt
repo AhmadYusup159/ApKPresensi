@@ -19,18 +19,10 @@ interface ApiService {
     suspend fun login(@Body loginRequest: LoginRequest): Response<LoginResponse>
 
 
-
     @GET("/api/v1/mahasiswabyid/{id_user}")
-    suspend fun getMyMahasiswa(@Path("id_user") userid: Int, @Header("Authorization") token: String): Response<MahasiswaResponse>
+    suspend fun getMyMahasiswa(
+        @Path("id_user") userid: Int,
+        @Header("Authorization") token: String
+    ): Response<MahasiswaResponse>
 
-    companion object {
-        fun create(): ApiService {
-            val retrofit = Retrofit.Builder()
-                .baseUrl("http://195.35.14.176:3000/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build()
-
-            return retrofit.create(ApiService::class.java)
-        }
-    }
 }
