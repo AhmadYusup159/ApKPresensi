@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.press.databinding.ItemRiwayatPresensiMkBinding
 import com.example.press.model.RiwayatPresensiMK
 
-class RiwayatPresensiMkAdapter :androidx.recyclerview.widget.ListAdapter<RiwayatPresensiMK, RiwayatPresensiMkAdapter.RiwayatPresensiMkViewHolder>(
+class RiwayatPresensiMkAdapter(val data:(RiwayatPresensiMK)-> Unit) :androidx.recyclerview.widget.ListAdapter<RiwayatPresensiMK, RiwayatPresensiMkAdapter.RiwayatPresensiMkViewHolder>(
     DIFF_CALLBACK
 ) {
     inner class RiwayatPresensiMkViewHolder(private val binding: ItemRiwayatPresensiMkBinding) :
@@ -18,6 +18,9 @@ class RiwayatPresensiMkAdapter :androidx.recyclerview.widget.ListAdapter<Riwayat
                 tvKelas.text = riwayatPresensiMk.kelas
                 tvProgress.text = riwayatPresensiMk.progress
                 tvSks.text = riwayatPresensiMk.sks
+            }
+            itemView.setOnClickListener {
+                data.invoke(riwayatPresensiMk)
             }
         }
     }

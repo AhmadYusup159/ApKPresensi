@@ -30,7 +30,12 @@ class RiwayatPresensiActivity : AppCompatActivity() {
 
     private fun setUpRecyceView() {
         val dataRiwayatPresensiMK = DataRiwayatPresensiMK.dummyRiwayatPresensiMk
-        riwayatPresensiMkAdapter = RiwayatPresensiMkAdapter()
+        riwayatPresensiMkAdapter = RiwayatPresensiMkAdapter{
+            val intent = Intent(this, DetailPresensiActivity::class.java)
+            intent.putExtra("detail", it)
+            startActivity(intent)
+            finish()
+        }
         binding.rvRiwayatPresensiMk.apply {
             layoutManager = LinearLayoutManager(this@RiwayatPresensiActivity, LinearLayoutManager.VERTICAL, false)
             adapter = riwayatPresensiMkAdapter
