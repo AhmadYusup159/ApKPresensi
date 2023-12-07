@@ -43,7 +43,7 @@ class DataStoreManager(context: Context) {
 
     suspend fun saveAuthToken(token: String) {
         dataStore.edit { preferences ->
-            preferences[TOKEN_KEY] = token
+            preferences[TOKEN_KEY] = "Bearer $token"
         }
     }
 

@@ -12,27 +12,19 @@ import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
-import com.bumptech.glide.Glide
 import com.example.press.LoginActivity
 import com.example.press.Retrofit.RetrofitClient
 import com.example.press.Retrofit.RetrofitClient.apiService
 import com.example.press.databinding.FragmentProfileBinding
 import com.example.press.model.DataStoreManager
-import com.example.press.model.UserResponse
 import com.example.press.mvvm.ProfileViewModel
 import com.example.press.mvvm.Repository
 import com.example.press.mvvm.ViewModelFactory
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
-import de.hdodenhof.circleimageview.CircleImageView
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.withContext
-import retrofit2.Response
-import retrofit2.http.Header
-import retrofit2.http.Path
 
 class ProfileFragment : Fragment() {
 
@@ -74,20 +66,6 @@ class ProfileFragment : Fragment() {
                 binding?.telp?.text = mahasiswaData?.notlp
                 binding?.alamat?.text = mahasiswaData?.alamat
 
-                // Handle gambar profil
-//                profileViewModel.foto.observe(viewLifecycleOwner, Observer { foto ->
-//                    // Check apakah foto tidak null
-//                    if (foto != null) {
-//                        binding?.circleImageView?.let { circleImage ->
-//                            Glide.with(requireContext())
-//                                .load(foto.foto)
-//                                .into(circleImage)
-//                        }
-//                    }
-//                })
-
-                val photoId : Flow<String?> = dataStoreManager.userid
-                val token: Flow<String?> = dataStoreManager.authToken
                 lifecycleScope.launch(Dispatchers.IO) {
                     try {
                         val userIdString = dataStoreManager.userid.first() ?: "0"
@@ -133,12 +111,11 @@ class ProfileFragment : Fragment() {
             val token = withContext(Dispatchers.IO) {
                 dataStoreManager.authToken.firstOrNull() ?: ""
             }
-            val bearerToken = "Bearer $token"
             val userId = withContext(Dispatchers.IO) {
                 dataStoreManager.getUserId() ?: 0
             }
-            profileViewModel.fetchMahasiswa(userId, bearerToken)
-            Log.d("token", "fetchDataAndPopulateUI: $bearerToken")
+            profileViewModel.fetchMahasiswa(userId, token)
+            Log.d("token", "fetchDataAndPopulateUI: $token")
         }
     }
 
