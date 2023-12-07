@@ -2,6 +2,7 @@ package com.example.press.presentation.profile
 
 import android.app.AlertDialog
 import android.content.Intent
+import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -14,8 +15,10 @@ import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
 import com.example.press.LoginActivity
 import com.example.press.Retrofit.RetrofitClient
+import com.example.press.Retrofit.RetrofitClient.apiService
 import com.example.press.databinding.FragmentProfileBinding
 import com.example.press.model.DataStoreManager
+import com.example.press.model.UserResponse
 import com.example.press.mvvm.ProfileViewModel
 import com.example.press.mvvm.Repository
 import com.example.press.mvvm.ViewModelFactory
@@ -23,7 +26,13 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
 import de.hdodenhof.circleimageview.CircleImageView
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.withContext
+import retrofit2.Response
+import retrofit2.http.Header
+import retrofit2.http.Path
 
 class ProfileFragment : Fragment() {
 
@@ -31,6 +40,7 @@ class ProfileFragment : Fragment() {
     private val binding get() = _binding
     private lateinit var dataStoreManager: DataStoreManager
     private lateinit var profileViewModel: ProfileViewModel
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -56,25 +66,67 @@ class ProfileFragment : Fragment() {
 
     private fun observeMahasiswaData() {
         profileViewModel.mahasiswa.observe(viewLifecycleOwner, Observer { mahasiswa ->
-            mahasiswa.values?.forEach {
+            mahasiswa.values?.forEach { mahasiswaData ->
                 // Update UI dengan data mahasiswa
-                binding?.nama?.text = it?.namaMahasiswa
-                binding?.npm?.text = it?.npm
-                binding?.email?.text = it?.email
-                binding?.telp?.text = it?.notlp
-                binding?.alamat?.text = it?.alamat
+                binding?.nama?.text = mahasiswaData?.namaMahasiswa
+                binding?.npm?.text = mahasiswaData?.npm
+                binding?.email?.text = mahasiswaData?.email
+                binding?.telp?.text = mahasiswaData?.notlp
+                binding?.alamat?.text = mahasiswaData?.alamat
 
                 // Handle gambar profil
-                binding?.circleImageView?.let {circleImage ->
-                    Glide.with(requireContext())
-                        .load("http://195.35.14.176:3000/uploadfotomahasiswa/${it?.foto}")
-                        .into(circleImage)
+//                profileViewModel.foto.observe(viewLifecycleOwner, Observer { foto ->
+//                    // Check apakah foto tidak null
+//                    if (foto != null) {
+//                        binding?.circleImageView?.let { circleImage ->
+//                            Glide.with(requireContext())
+//                                .load(foto.foto)
+//                                .into(circleImage)
+//                        }
+//                    }
+//                })
+
+                val photoId : Flow<String?> = dataStoreManager.userid
+                val token: Flow<String?> = dataStoreManager.authToken
+                lifecycleScope.launch(Dispatchers.IO) {
+                    try {
+                        val userIdString = dataStoreManager.userid.first() ?: "0"
+                        val userIdInt = userIdString.toInt()
+
+                        val token = dataStoreManager.authToken.first() ?: ""
+
+                        val response = apiService.getFotoById(userIdInt, token)
+
+                        if (response.isSuccessful) {
+                            val responseBody = response.body()
+                            if (responseBody != null) {
+                                // Lakukan sesuatu dengan responseBody
+                                val bitmap = BitmapFactory.decodeStream(responseBody.byteStream())
+                                withContext(Dispatchers.Main) {
+                                    binding?.circleImageView?.setImageBitmap(bitmap)
+                                }
+                            } else {
+                                Log.e("getFotoById", "Response body is null")
+                            }
+                        } else {
+                            // Tambahkan log untuk memahami respons tidak berhasil
+                            Log.e("getFotoById", "Unsuccessful response: ${response.code()}")
+                            Log.e("getFotoById", "Error message: ${response.message()}")
+                        }
+
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
                 }
-                Log.d("foto", "observeMahasiswaData: ${it?.foto} ")
+
+
+
+                Log.d("foto", "observeMahasiswaData: ${mahasiswaData?.foto} ")
             }
             Log.d("mahasiswa", "fetchDataAndPopulateUI: $mahasiswa")
         })
     }
+
 
     private fun fetchDataAndPopulateUI() {
         lifecycleScope.launch {
