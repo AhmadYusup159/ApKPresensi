@@ -13,7 +13,9 @@ class ViewModelFactory(private val repository: Repository) : ViewModelProvider.F
         }
         if (modelClass.isAssignableFrom(ProfileViewModel::class.java)){
             return  ProfileViewModel(repository) as T
-
+        }
+        if (modelClass.isAssignableFrom(JadwalViewModel::class.java)) {
+            return JadwalViewModel(repository) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }

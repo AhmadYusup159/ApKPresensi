@@ -3,6 +3,7 @@ package com.example.press.interf
 import com.example.press.model.LoginRequest
 import com.example.press.model.LoginResponse
 import com.example.press.model.UserResponse
+import com.example.press.model.jadwal.ResponseJadwalSenin
 import okhttp3.ResponseBody
 import retrofit2.Response
 import retrofit2.http.Body
@@ -30,5 +31,12 @@ interface ApiService {
         @Path("id_user") userId: Int,
         @Header("Authorization") token: String,
     ): Response<ResponseBody>
+
+    @GET("/api/v1/jadwalmahasiswabyidmahasiswa/{id_user}/{hari}")
+    suspend fun getJadwalById(
+        @Path("id_user") userId: Int,
+        @Header("Authorization") token: String,
+        @Path("hari") hari : String = "Senin"
+    ): Response<ResponseJadwalSenin>
 
 }

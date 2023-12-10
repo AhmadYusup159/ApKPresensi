@@ -5,6 +5,7 @@ import com.example.press.model.DataStoreManager
 import com.example.press.model.LoginRequest
 import com.example.press.model.LoginResponse
 import com.example.press.model.UserResponse
+import com.example.press.model.jadwal.ResponseJadwalSenin
 
 import retrofit2.Response
 
@@ -31,5 +32,9 @@ class Repository(private val apiService: ApiService, private val dataStoreManage
     suspend fun getMahasiswaById(userId: Int, token: String): Response<UserResponse> {
         return apiService.getMyMahasiswa(userId, token)
     }
+    suspend fun getJadwalById(userId: Int, token: String, hari: String): Response<ResponseJadwalSenin> {
+        return apiService.getJadwalById(userId, token, hari)
+    }
+
 
 }
