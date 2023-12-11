@@ -48,7 +48,7 @@ class JadwalKamisFragment : Fragment(R.layout.fragment_jadwal_kamis) {
 
         // Inisialisasi RecyclerView dan adapter
         val recyclerView: RecyclerView = binding?.rvJadwalKamis ?: return
-        jadwalAdapter = JadwalAdapter()
+        jadwalAdapter = JadwalAdapter(dataStoreManager)
 
         recyclerView.apply {
             layoutManager = LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL, false)

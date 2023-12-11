@@ -48,7 +48,7 @@ class JadwalSeninFragment : Fragment(R.layout.fragment_jadwal_senin) {
 
         // Inisialisasi RecyclerView dan adapter
         val recyclerView: RecyclerView = binding?.rvJadwalSenin ?: return
-        jadwalAdapter = JadwalAdapter()
+        jadwalAdapter = JadwalAdapter(dataStoreManager)
 
         recyclerView.apply {
             layoutManager = LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL, false)

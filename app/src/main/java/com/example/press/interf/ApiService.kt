@@ -39,4 +39,10 @@ interface ApiService {
         @Path("hari") hari : String = "Senin"
     ): Response<ResponseJadwalSenin>
 
+    @GET("/api/v1/fotomatakuliah/{id_matakuliah}")
+    suspend fun getFotoMakulById(
+        @Path("id_matakuliah") makulId: Int,
+        @Header("Authorization") token: String,
+    ): Response<ResponseBody>
+
 }

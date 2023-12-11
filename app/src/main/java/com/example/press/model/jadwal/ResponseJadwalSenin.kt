@@ -50,6 +50,9 @@ data class JadwalValues(
 )
 
 data class DetailJadwalSenin(
+    @field:SerializedName("id_matakuliah")
+    val idmatakuliah: Int? = null,
+
     @field:SerializedName("hari")
     val hari: String? = null,
 
@@ -70,6 +73,7 @@ data class DetailJadwalSenin(
 
     @field:SerializedName("sks")
     val sks: Int? = null,
+
     @field:SerializedName("nama_dosen")
     val namadosen: String? = null
 )
