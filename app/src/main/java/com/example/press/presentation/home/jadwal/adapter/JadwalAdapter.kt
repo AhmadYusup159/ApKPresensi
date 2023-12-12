@@ -1,5 +1,6 @@
 package com.example.press.presentation.home.jadwal.adapter
 
+import android.annotation.SuppressLint
 import android.graphics.BitmapFactory
 import android.util.Log
 import android.view.LayoutInflater
@@ -12,7 +13,6 @@ import com.example.press.Retrofit.RetrofitClient.apiService
 import com.example.press.databinding.ItemJadwalBinding
 import com.example.press.model.DataStoreManager
 import com.example.press.model.jadwal.DetailJadwalSenin
-import com.squareup.picasso.Picasso
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first

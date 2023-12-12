@@ -28,5 +28,23 @@ class DenahRuanganActivity : AppCompatActivity() {
             startActivity(intent)
             finish()
         }
+
+        binding.cardViewFakTek1lt2.setOnClickListener{
+            val intent= Intent(this@DenahRuanganActivity, DenahFakTek1Lt2Activity::class.java)
+            startActivity(intent)
+            finish()
+        }
+
+        binding.cardViewLabTek1lt2.setOnClickListener{
+            val intent= Intent(this@DenahRuanganActivity, DenahLabTek1Lt2Activity::class.java)
+            startActivity(intent)
+            finish()
+        }
+
+        binding.cardViewFakTek1lt1.setOnClickListener{
+            val intent= Intent(this@DenahRuanganActivity, DenahFakTek1Lt1Activity::class.java)
+            startActivity(intent)
+            finish()
+        }
     }
 }

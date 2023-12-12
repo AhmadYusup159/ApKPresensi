@@ -44,7 +44,7 @@ class JadwalSeninFragment : Fragment(R.layout.fragment_jadwal_senin) {
         // Inisialisasi ViewModel menggunakan ViewModelFactory
         val repository = Repository(RetrofitClient.apiService, dataStoreManager)
         val viewModelFactory = ViewModelFactory(repository)
-        viewModel = ViewModelProvider(this, viewModelFactory).get(JadwalViewModel::class.java)
+        viewModel = ViewModelProvider(this, viewModelFactory)[JadwalViewModel::class.java]
 
         // Inisialisasi RecyclerView dan adapter
         val recyclerView: RecyclerView = binding?.rvJadwalSenin ?: return

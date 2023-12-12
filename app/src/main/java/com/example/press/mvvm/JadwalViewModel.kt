@@ -12,7 +12,6 @@ class JadwalViewModel(private val repository: Repository) : ViewModel() {
 
     val jadwalLiveData: LiveData<List<DetailJadwalSenin>>
         get() = _jadwalLiveData
-
     // Fungsi untuk mendapatkan jadwal berdasarkan id dan hari
     fun getJadwalById(userId: Int, token: String, hari: String) {
         viewModelScope.launch {
