@@ -2,6 +2,8 @@ package com.example.press.interf
 
 import com.example.press.model.LoginRequest
 import com.example.press.model.LoginResponse
+import com.example.press.model.PresensiMataKuliah
+import com.example.press.model.PresesnsiResponse
 import com.example.press.model.UserResponse
 import com.example.press.model.jadwal.ResponseJadwalSenin
 import okhttp3.ResponseBody
@@ -44,5 +46,17 @@ interface ApiService {
         @Path("id_matakuliah") makulId: Int,
         @Header("Authorization") token: String,
     ): Response<ResponseBody>
+    @GET("/api/v1/presensibyidmahasiswa/{id_user}")
+    suspend fun getJadwalMhs(
+        @Path("id_user") userId: Int,
+        @Header("Authorization") token: String,
+    ): Response<PresesnsiResponse>
+    @GET("/api/v1/presensimatakuliah/{id_user}/{id_matakuliah}")
+    suspend fun getPresensiMatakuliah(
+        @Path("id_user") userId: Int,
+        @Path("id_matakuliah") matakuliahId: Int,
+        @Header("Authorization") token: String
+    ): Response<PresensiMataKuliah>
+
 
 }

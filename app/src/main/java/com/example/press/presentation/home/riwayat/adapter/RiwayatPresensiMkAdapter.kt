@@ -3,49 +3,56 @@ package com.example.press.presentation.home.riwayat.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.press.databinding.ItemRiwayatPresensiMkBinding
-import com.example.press.model.RiwayatPresensiMK
+import com.example.press.model.RiwayatPresensi
 
-class RiwayatPresensiMkAdapter(val data:(RiwayatPresensiMK)-> Unit) :androidx.recyclerview.widget.ListAdapter<RiwayatPresensiMK, RiwayatPresensiMkAdapter.RiwayatPresensiMkViewHolder>(
-    DIFF_CALLBACK
-) {
+class RiwayatPresensiMkAdapter(private val data: (RiwayatPresensi) -> Unit) :
+    ListAdapter<RiwayatPresensi, RiwayatPresensiMkAdapter.RiwayatPresensiMkViewHolder>(
+        DIFF_CALLBACK
+    ) {
+
     inner class RiwayatPresensiMkViewHolder(private val binding: ItemRiwayatPresensiMkBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(riwayatPresensiMk: RiwayatPresensiMK) {
+        fun bind(riwayatPresensi: RiwayatPresensi) {
             binding.apply {
-                tvMk.text = riwayatPresensiMk.mataKuliah
-                tvKelas.text = riwayatPresensiMk.kelas
-                tvProgress.text = riwayatPresensiMk.progress
-                tvSks.text = riwayatPresensiMk.sks
+                tvMk.text = riwayatPresensi.namamatakuliah
+                tvKelas.text = riwayatPresensi.namakelas
+                tvProgress.text = riwayatPresensi.jumlahpresensi
+                tvSks.text = riwayatPresensi.sks
             }
+
             itemView.setOnClickListener {
-                data.invoke(riwayatPresensiMk)
+                data.invoke(riwayatPresensi)
             }
         }
     }
 
     companion object {
-        val DIFF_CALLBACK = object : DiffUtil.ItemCallback<RiwayatPresensiMK>() {
+        val DIFF_CALLBACK = object : DiffUtil.ItemCallback<RiwayatPresensi>() {
             override fun areItemsTheSame(
-                oldItem: RiwayatPresensiMK,
-                newItem: RiwayatPresensiMK
+                oldItem: RiwayatPresensi,
+                newItem: RiwayatPresensi
             ): Boolean {
-                return oldItem == newItem
+                return oldItem.idmatakuliah == newItem.idmatakuliah
             }
 
             override fun areContentsTheSame(
-                oldItem: RiwayatPresensiMK,
-                newItem: RiwayatPresensiMK
+                oldItem: RiwayatPresensi,
+                newItem: RiwayatPresensi
             ): Boolean {
-                return oldItem.id == newItem.id
+                return oldItem.hashCode() == newItem.hashCode()
             }
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RiwayatPresensiMkViewHolder {
-        val binding =
-            ItemRiwayatPresensiMkBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding = ItemRiwayatPresensiMkBinding.inflate(
+            LayoutInflater.from(parent.context),
+            parent,
+            false
+        )
         return RiwayatPresensiMkViewHolder(binding)
     }
 

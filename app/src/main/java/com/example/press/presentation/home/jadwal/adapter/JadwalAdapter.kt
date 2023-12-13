@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.press.R
 import com.example.press.Retrofit.RetrofitClient.apiService
 import com.example.press.databinding.ItemJadwalBinding
 import com.example.press.model.DataStoreManager

@@ -50,6 +50,11 @@
         <activity
             android:name=".presentation.home.riwayat.RiwayatPresensiActivity"
             android:exported="false" />
+<!--        <activity android:name=".presentation.home.riwayat.RiwayatPresensiActivity">-->
+<!--            <viewModel-->
+<!--                android:name=".mvvm.RiwayatPresensiViewModel"-->
+<!--                android:viewModelFactory="androidx.lifecycle.ViewModelProvider.NewInstanceFactory" />-->
+<!--        </activity>-->
         <activity
             android:name=".presentation.home.denah.DenahRuanganActivity"
             android:exported="false" />
