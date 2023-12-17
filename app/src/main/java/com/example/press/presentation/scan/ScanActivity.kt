@@ -71,30 +71,32 @@ class ScanActivity : AppCompatActivity() {
             isAutoFocusEnabled = true
             isFlashEnabled = false
 
-//            decodeCallback = DecodeCallback {
-//                runOnUiThread {
-//                    binding.tvOutput.text = it.text
-//                }
-//            }
+
             decodeCallback = DecodeCallback {
                 runOnUiThread {
                     binding.tvOutput.text = it.text
 
-                    // Parse the scanned data (assuming it's a JSON string)
                     val scannedData = it.text
                     val gson = Gson()
                     val scanRequest = gson.fromJson(scannedData, ScanRequest::class.java)
 
-                    // Assuming you have a token, replace "YOUR_TOKEN" with the actual token
+                    // Launch a coroutine to get the token from dataStoreManager
                     viewModel.viewModelScope.launch {
                         // Assuming you have a token, replace "YOUR_TOKEN" with the actual token
                         val token = dataStoreManager.authToken.firstOrNull() ?: ""
 
                         // Send the scanned data to the API
                         viewModel.postScanResult(token, scanRequest)
+
+                        // Stop scanning after a successful scan
+                        codeScanner.stopPreview()
+
+                        // Show a toast message indicating successful attendance
+                        Toast.makeText(this@ScanActivity, "Presensi Berhasil", Toast.LENGTH_SHORT).show()
                     }
                 }
             }
+
 
             errorCallback = ErrorCallback {
                 runOnUiThread{
