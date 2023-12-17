@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewModelScope
 import com.budiyev.android.codescanner.AutoFocusMode
 import com.budiyev.android.codescanner.CodeScanner
 import com.budiyev.android.codescanner.DecodeCallback
@@ -19,12 +20,16 @@ import com.example.press.MainActivity
 import com.example.press.Retrofit.RetrofitClient
 import com.example.press.databinding.ActivityScanBinding
 import com.example.press.model.DataStoreManager
+import com.example.press.model.ScanRequest
 import com.example.press.mvvm.Repository
 import com.example.press.mvvm.ScanViewModel
 import com.example.press.mvvm.ViewModelFactory
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.model.LatLng
+import com.google.gson.Gson
+import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.launch
 
 class ScanActivity : AppCompatActivity() {
     lateinit var binding : ActivityScanBinding
@@ -66,9 +71,28 @@ class ScanActivity : AppCompatActivity() {
             isAutoFocusEnabled = true
             isFlashEnabled = false
 
+//            decodeCallback = DecodeCallback {
+//                runOnUiThread {
+//                    binding.tvOutput.text = it.text
+//                }
+//            }
             decodeCallback = DecodeCallback {
                 runOnUiThread {
                     binding.tvOutput.text = it.text
+
+                    // Parse the scanned data (assuming it's a JSON string)
+                    val scannedData = it.text
+                    val gson = Gson()
+                    val scanRequest = gson.fromJson(scannedData, ScanRequest::class.java)
+
+                    // Assuming you have a token, replace "YOUR_TOKEN" with the actual token
+                    viewModel.viewModelScope.launch {
+                        // Assuming you have a token, replace "YOUR_TOKEN" with the actual token
+                        val token = dataStoreManager.authToken.firstOrNull() ?: ""
+
+                        // Send the scanned data to the API
+                        viewModel.postScanResult(token, scanRequest)
+                    }
                 }
             }
 
@@ -150,7 +174,7 @@ class ScanActivity : AppCompatActivity() {
             fusedLocationClient.lastLocation.addOnSuccessListener { location: Location? ->
                 if (location != null) {
                     val userLocation = LatLng(location.latitude, location.longitude)
-                    val targetLocation = LatLng(-1.629685, 103.593973)
+                    val targetLocation = LatLng(-7.756080, 110.412269)
 
                     if(calculateDistance(userLocation, targetLocation) <=1000){
 //                        binding.tvLatitude.text = location.latitude.toString()
