@@ -4,6 +4,7 @@ import com.example.press.model.LoginRequest
 import com.example.press.model.LoginResponse
 import com.example.press.model.PresensiMataKuliah
 import com.example.press.model.PresesnsiResponse
+import com.example.press.model.ScanRequest
 import com.example.press.model.UserResponse
 import com.example.press.model.jadwal.ResponseJadwalSenin
 import okhttp3.ResponseBody
@@ -57,6 +58,9 @@ interface ApiService {
         @Path("id_matakuliah") matakuliahId: Int,
         @Header("Authorization") token: String
     ): Response<PresensiMataKuliah>
-
-
+    @POST("/api/v1/tambahpresensi")
+    suspend fun tambahPresensi(
+        @Header("Authorization") token: String,
+        @Body scanRequest: ScanRequest
+    ): Response<Void>
 }

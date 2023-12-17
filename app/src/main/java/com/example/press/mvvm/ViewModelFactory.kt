@@ -22,6 +22,8 @@ class ViewModelFactory(private val repository: Repository) : ViewModelProvider.F
             return RiwayatPresensiViewModel(repository) as T
         if (modelClass.isAssignableFrom(DetailRiwayatPresensiViewModel::class.java))
             return DetailRiwayatPresensiViewModel(repository) as T
+        if (modelClass.isAssignableFrom(ScanViewModel::class.java))
+            return ScanViewModel(repository) as T
 
         throw IllegalArgumentException("Unknown ViewModel class")
     }

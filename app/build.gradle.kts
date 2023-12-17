@@ -110,6 +110,10 @@ dependencies {
     //photoView
     implementation ("com.github.chrisbanes:PhotoView:2.3.0")
 
+    //QR Post
+    implementation ("com.android.volley:volley:1.2.0")
+
+
 
 
 }

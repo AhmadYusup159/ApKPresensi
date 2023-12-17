@@ -6,6 +6,7 @@ import com.example.press.model.LoginRequest
 import com.example.press.model.LoginResponse
 import com.example.press.model.PresensiMataKuliah
 import com.example.press.model.PresesnsiResponse
+import com.example.press.model.ScanRequest
 import com.example.press.model.UserResponse
 import com.example.press.model.jadwal.ResponseJadwalSenin
 
@@ -42,6 +43,10 @@ class Repository(private val apiService: ApiService, private val dataStoreManage
     }
     suspend fun getPresensiMatakuliah(userId: Int, matakuliahId: Int, token: String): Response<PresensiMataKuliah> {
         return apiService.getPresensiMatakuliah(userId,matakuliahId, token)
+    }
+
+    suspend fun postPresensiMahasiswa(token: String, scanRequest: ScanRequest): Response<Void> {
+        return apiService.tambahPresensi(token, scanRequest)
     }
 
 }

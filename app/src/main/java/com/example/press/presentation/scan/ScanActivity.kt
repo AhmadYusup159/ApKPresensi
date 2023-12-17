@@ -9,13 +9,19 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.ViewModelProvider
 import com.budiyev.android.codescanner.AutoFocusMode
 import com.budiyev.android.codescanner.CodeScanner
 import com.budiyev.android.codescanner.DecodeCallback
 import com.budiyev.android.codescanner.ErrorCallback
 import com.budiyev.android.codescanner.ScanMode
 import com.example.press.MainActivity
+import com.example.press.Retrofit.RetrofitClient
 import com.example.press.databinding.ActivityScanBinding
+import com.example.press.model.DataStoreManager
+import com.example.press.mvvm.Repository
+import com.example.press.mvvm.ScanViewModel
+import com.example.press.mvvm.ViewModelFactory
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.model.LatLng
@@ -23,6 +29,8 @@ import com.google.android.gms.maps.model.LatLng
 class ScanActivity : AppCompatActivity() {
     lateinit var binding : ActivityScanBinding
     lateinit var codeScanner : CodeScanner
+    private lateinit var viewModel: ScanViewModel
+    private lateinit var dataStoreManager: DataStoreManager
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,7 +39,9 @@ class ScanActivity : AppCompatActivity() {
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
 
-
+        dataStoreManager = DataStoreManager(this)
+        val repository = Repository(RetrofitClient.apiService, dataStoreManager)
+        viewModel = ViewModelProvider(this, ViewModelFactory(repository)).get(ScanViewModel::class.java)
         binding.ImageButtonBack.setOnClickListener{
             val intent= Intent(this@ScanActivity, MainActivity::class.java)
             startActivity(intent)
