@@ -58,8 +58,9 @@ interface ApiService {
         @Path("id_matakuliah") matakuliahId: Int,
         @Header("Authorization") token: String
     ): Response<PresensiMataKuliah>
-    @POST("/api/v1/tambahpresensi")
+    @POST("/api/v1/tambahpresensi/{id_user}")
     suspend fun tambahPresensi(
+        @Path("id_user") userId: Int,
         @Header("Authorization") token: String,
         @Body scanRequest: ScanRequest
     ): Response<Void>

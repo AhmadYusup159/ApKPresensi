@@ -37,6 +37,7 @@ class ScanActivity : AppCompatActivity() {
     private lateinit var viewModel: ScanViewModel
     private lateinit var dataStoreManager: DataStoreManager
     private lateinit var fusedLocationClient: FusedLocationProviderClient
+    private var isScanAndPostDone = false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityScanBinding.inflate(layoutInflater)
@@ -74,7 +75,7 @@ class ScanActivity : AppCompatActivity() {
 
             decodeCallback = DecodeCallback {
                 runOnUiThread {
-                    binding.tvOutput.text = it.text
+
 
                     val scannedData = it.text
                     val gson = Gson()
@@ -84,15 +85,28 @@ class ScanActivity : AppCompatActivity() {
                     viewModel.viewModelScope.launch {
                         // Assuming you have a token, replace "YOUR_TOKEN" with the actual token
                         val token = dataStoreManager.authToken.firstOrNull() ?: ""
+                        val userId = dataStoreManager.getUserId() ?: 0
 
                         // Send the scanned data to the API
-                        viewModel.postScanResult(token, scanRequest)
+                        viewModel.postScanResult(userId,token, scanRequest)
 
                         // Stop scanning after a successful scan
-                        codeScanner.stopPreview()
+                        if (viewModel.scanResult.value == true) {
+                            codeScanner.stopPreview()
 
-                        // Show a toast message indicating successful attendance
-                        Toast.makeText(this@ScanActivity, "Presensi Berhasil", Toast.LENGTH_SHORT).show()
+                            // Show a toast message indicating successful attendance
+                            Toast.makeText(this@ScanActivity, "Presensi Berhasil", Toast.LENGTH_SHORT).show()
+
+                            val intent = Intent(this@ScanActivity, MainActivity::class.java)
+                            startActivity(intent)
+                            finish()
+                        }
+                        else{
+                            Toast.makeText(this@ScanActivity, "Presensi Gagal", Toast.LENGTH_SHORT).show()
+                            val intent = Intent(this@ScanActivity, MainActivity::class.java)
+                            startActivity(intent)
+                            finish()
+                        }
                     }
                 }
             }

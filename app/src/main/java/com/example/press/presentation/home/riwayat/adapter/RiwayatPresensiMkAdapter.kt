@@ -19,8 +19,13 @@ class RiwayatPresensiMkAdapter(private val data: (RiwayatPresensi) -> Unit) :
             binding.apply {
                 tvMk.text = riwayatPresensi.namamatakuliah
                 tvKelas.text = riwayatPresensi.namakelas
-                tvProgress.text = riwayatPresensi.jumlahpresensi
                 tvSks.text = riwayatPresensi.sks
+
+
+                val jumlahPresensi = riwayatPresensi.jumlahpresensi?.toIntOrNull() ?: 0
+                val percentage = (jumlahPresensi / 16.0) * 100
+
+                tvProgress.text = String.format("%.2f%% Complete", percentage)
             }
 
             itemView.setOnClickListener {

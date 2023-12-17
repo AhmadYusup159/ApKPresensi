@@ -45,8 +45,8 @@ class Repository(private val apiService: ApiService, private val dataStoreManage
         return apiService.getPresensiMatakuliah(userId,matakuliahId, token)
     }
 
-    suspend fun postPresensiMahasiswa(token: String, scanRequest: ScanRequest): Response<Void> {
-        return apiService.tambahPresensi(token, scanRequest)
+    suspend fun postPresensiMahasiswa(userId: Int, token: String, scanRequest: ScanRequest): Response<Void> {
+        return apiService.tambahPresensi(userId,token, scanRequest)
     }
 
 }
