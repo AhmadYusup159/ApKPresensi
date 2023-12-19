@@ -20,6 +20,8 @@ class RiwayatPresensiMkAdapter(private val data: (RiwayatPresensi) -> Unit) :
                 tvMk.text = riwayatPresensi.namamatakuliah
                 tvKelas.text = riwayatPresensi.namakelas
                 tvSks.text = riwayatPresensi.sks
+                progressBar.max = 16
+                progressBar.progress = riwayatPresensi.jumlahpresensi?.toIntOrNull() ?: 0
 
 
                 val jumlahPresensi = riwayatPresensi.jumlahpresensi?.toIntOrNull() ?: 0

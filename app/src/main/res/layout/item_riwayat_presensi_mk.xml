@@ -35,12 +35,16 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <ImageView
-                android:id="@+id/imageView2"
-                android:layout_width="wrap_content"
+
+            <ProgressBar
+                android:id="@+id/progressBar"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:src="@drawable/progressbar"
+                android:max="16"
+                android:progressTint="@color/primary"
+                app:layout_constraintEnd_toEndOf="@+id/tv_mk"
                 app:layout_constraintStart_toStartOf="@+id/tv_mk"
                 app:layout_constraintTop_toBottomOf="@+id/tv_mk" />
 
@@ -55,7 +59,7 @@
                 android:textColor="#383636"
                 android:textSize="10sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+                app:layout_constraintTop_toBottomOf="@+id/progressBar" />
 
             <TextView
                 android:id="@+id/tv_kelas"
