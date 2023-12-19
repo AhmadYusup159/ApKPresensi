@@ -32,7 +32,7 @@ class RiwayatPresensiActivity : AppCompatActivity() {
 
         dataStoreManager = DataStoreManager(this)
         val repository = Repository(RetrofitClient.apiService, dataStoreManager)
-        riwayatPresensiViewModel = ViewModelProvider(this, ViewModelFactory(repository)).get(RiwayatPresensiViewModel::class.java)
+        riwayatPresensiViewModel = ViewModelProvider(this, ViewModelFactory(repository))[RiwayatPresensiViewModel::class.java]
 
 
         binding.imageButtonBack.setOnClickListener {
@@ -66,9 +66,9 @@ class RiwayatPresensiActivity : AppCompatActivity() {
     }
 
     private fun observeViewModel() {
-        riwayatPresensiViewModel.riwayat.observe(this, { riwayat ->
+        riwayatPresensiViewModel.riwayat.observe(this) { riwayat ->
             riwayatPresensiMkAdapter.submitList(riwayat)
-        })
+        }
     }
 
     private fun fetchData() {

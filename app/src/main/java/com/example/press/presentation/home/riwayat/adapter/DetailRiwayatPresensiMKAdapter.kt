@@ -1,12 +1,12 @@
 package com.example.press.presentation.home.riwayat.adapter
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.press.databinding.ItemDetailPresensiBinding
-import com.example.press.model.NamaMakul
 import com.example.press.model.Presensi
 
 class DetailRiwayatPresensiMKAdapter :
@@ -18,9 +18,20 @@ class DetailRiwayatPresensiMKAdapter :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(presensi: Presensi) {
             binding.apply {
+                // Pengecekan apakah tanggal dan waktu tidak bernilai null
+                if (presensi.tanggal != null) {
+                    tvTanggal.text = presensi.tanggal
+                    tvTanggal.visibility = View.VISIBLE
+                } else {
+                    tvTanggal.visibility = View.GONE
+                }
 
-                tvTanggal.text = presensi.tanggal
-                tvWaktu.text = presensi.waktu
+                if (presensi.waktu != null) {
+                    tvWaktu.text = presensi.waktu
+                    tvWaktu.visibility = View.VISIBLE
+                } else {
+                    tvWaktu.visibility = View.GONE
+                }
             }
         }
     }
