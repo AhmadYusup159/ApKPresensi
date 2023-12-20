@@ -102,6 +102,7 @@ class ScanActivity : AppCompatActivity() {
                             finish()
                         }
                         else{
+                            codeScanner.stopPreview()
                             Toast.makeText(this@ScanActivity, "Presensi Gagal", Toast.LENGTH_SHORT).show()
                             val intent = Intent(this@ScanActivity, MainActivity::class.java)
                             startActivity(intent)
